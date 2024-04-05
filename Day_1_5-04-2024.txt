@@ -1,0 +1,36 @@
+/************************************1544. Make The String Great - EASY*****************************/
+#include <string>
+#include <stack>
+using namespace std;
+
+class Solution {
+public:
+    string makeGood(string s) {
+        stack<char> stk;
+        int n = s.size();
+        if (n <= 1)
+            return s;
+        
+        stk.push(s[0]);
+        for (int i = 1; i < n; i++) {
+            if (!stk.empty()) {
+                char top_c = stk.top();
+                if ((top_c - 'A' == s[i] - 'a') || (top_c - 'a' == s[i] - 'A')) {
+                    stk.pop();
+                } else
+                    stk.push(s[i]);
+            } else {
+                stk.push(s[i]);
+            }
+        }
+
+        string ans = "";
+        while (!stk.empty()) {
+            ans = stk.top() + ans;
+            stk.pop();
+        }
+
+        return ans;
+    }
+};
+
