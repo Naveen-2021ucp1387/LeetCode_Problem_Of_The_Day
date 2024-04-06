@@ -1,0 +1,32 @@
+/*********************1249. Minimum Remove to Make Valid Parentheses - MEDIUM********/
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        stack<pair<char, int>> stk;
+        for (int i = 0; i < s.length(); i++) {
+            // char top_c = stk.top().first;
+            if (s[i] == '(') {
+                stk.push({'(', i});
+            } else if (s[i] == ')' &&stk.size() > 0 && stk.top().first == '(') {
+                stk.pop();
+                continue;
+            }
+            else if(s[i] == ')')
+                stk.push({')',i});
+            }
+        
+        while( stk.size() > 0) {
+            char top_c = stk.top().first;
+            int index = stk.top().second;
+            s[index] = '$';
+            stk.pop();
+        }
+        string ans = "";
+        for (auto i : s) {
+            if (i == '$')
+                continue;
+            ans += i;
+        }
+        return ans;
+    }
+};
