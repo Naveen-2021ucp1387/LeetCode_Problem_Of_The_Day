@@ -1,4 +1,4 @@
-/*********************678. Valid Parenthesis String********************/
+/*********************678. Valid Parenthesis String - MEDIUM********************/
 class Solution {
   public: bool checkValidString(string s) {
     stack < int > openStk;
