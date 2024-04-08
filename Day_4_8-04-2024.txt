@@ -1,0 +1,60 @@
+/*******************1700. Number of Students Unable to Eat Lunch - EASY******/
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+        int s_0 = 0;
+        int s_1 = 0;
+        for (auto i : students) {
+            if (i == 0)
+                s_0++;
+            else
+                s_1++;
+        }
+        for (auto i : sandwiches) {
+            if (i == 0) {
+                if (s_0 > 0) {
+                    s_0--;
+                } else {
+                    return s_0 + s_1;
+                }
+            } else {
+                if (s_1 > 0) {
+                    s_1--;
+                } else {
+                    return s_0 + s_1;
+                }
+            }
+        }
+        return s_0 + s_1;
+    }
+};
+
+// class Solution {
+// public:
+//     int countStudents(vector<int>& students, vector<int>& sandwiches) {
+//         stack<int> stk;
+//         queue<int> pq;
+//         int n = students.size();
+//         for (int i = 0; i < n; i++) {
+//             pq.push(students[i]);
+//         }
+//         for (int i = n - 1; i >= 0; i--) {
+//             stk.push(sandwiches[i]);
+//         }
+//         int lastServed = 0;
+//         while (!pq.empty() && lastServed < pq.size()) {
+//             int front = pq.front();
+//             int top = stk.top();
+//             if (front == top) {
+//                 pq.pop();
+//                 stk.pop();
+//                 lastServed = 0;
+//             } else {
+//                 pq.pop();
+//                 pq.push(front);
+//                 lastServed++;
+//             }
+//         }
+//         return lastServed;
+//     }
+// };
