@@ -1,5 +1,5 @@
-/*********************678. Valid Parenthesis String********************/
-class Solution {
+/*********************678. Valid Parenthesis String - MEDIUM********************/
+class Solution { 
   public: bool checkValidString(string s) {
     stack < int > openStk;
     stack < int > asterikStk;
