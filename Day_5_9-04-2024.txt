@@ -1,0 +1,30 @@
+/******************2073. Time Needed to Buy Tickets - EASY********************/
+class Solution {
+public:
+    int timeRequiredToBuy(vector<int>& tickets, int k) {
+        // int time = 0;
+        // for(int i=0;i<tickets.size();i++){
+        //     if(i<=k)
+        //         time += min(tickets[i],tickets[k]);
+        //     else
+        //         time += min(tickets[i],tickets[k]-1);
+        // }
+        // return time;
+        queue<int> pq;
+        for (int i = 0; i < tickets.size(); i++) {
+            pq.push(i);
+        }
+        int time = 0;
+        while (tickets[k] > 0 && !pq.empty()) {
+            int front = pq.front();
+            if (tickets[front] > 0) {
+                tickets[front]--;
+                pq.pop();
+                pq.push(front);
+                time++;
+            } else
+                pq.pop();
+        }
+        return time;
+    }
+};
