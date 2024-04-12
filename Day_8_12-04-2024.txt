@@ -1,0 +1,32 @@
+/*********************42. Trapping Rain Water - HARD************************/
+class Solution {
+public:
+    vector<int> getLeftMaxArray(vector<int>& height, int n) {
+        vector<int> LEFT_MAX(n);
+        LEFT_MAX[0] = height[0];
+        for (int i = 1; i < n; i++)
+            LEFT_MAX[i] = max(LEFT_MAX[i - 1], height[i]);
+
+        return LEFT_MAX;
+    }
+    vector<int> getRightMaxArray(vector<int>& height, int n) {
+        vector<int> RIGHT_MAX(n);
+        RIGHT_MAX[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; i--)
+            RIGHT_MAX[i] = max(RIGHT_MAX[i + 1], height[i]);
+
+        return RIGHT_MAX;
+    }
+    int trap(vector<int>& height) {
+        int n = height.size();
+        vector<int> left_max = getLeftMaxArray(height, n);
+        vector<int> right_max = getRightMaxArray(height, n);
+
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += min(left_max[i], right_max[i]) - height[i];
+
+        }
+        return sum;
+    }
+};
