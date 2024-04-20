@@ -1,0 +1,91 @@
+/*************1992. Find All Groups of Farmland - MEDIUM***********************/
+class Solution {
+public:
+    // int delrow[4] = {-1, 1, 0, 0};
+    // int delcol[4] = {0, 0, -1, 1};
+
+    // void dfs(int i, int j, vector<vector<int>>& land,
+    //          vector<vector<int>>& visit, priority_queue<pair<int, int>> &pq,
+    //          int m, int n) {
+    //     visit[i][j] = 1;
+    //     pq.push({i, j});
+    //     for (int k = 0; k < 4; k++) {
+    //         int nrow = i + delrow[k];
+    //         int ncol = j + delcol[k];
+    //         if (nrow >= 0 && nrow < m && ncol >= 0 && ncol < n &&
+    //             land[nrow][ncol] == 1 && visit[nrow][ncol] == 0) {
+    //             dfs(nrow, ncol, land, visit, pq, m, n);
+    //         }
+    //     }
+    // }
+    // vector<vector<int>> findFarmland(vector<vector<int>>& land) {
+    //     int m = land.size();
+    //     int n = land[0].size();
+    //     vector<vector<int>> ans;
+    //     vector<vector<int>> visit(m, vector<int>(n, 0));
+    //     for (int i = 0; i < m; i++) {
+    //         for (int j = 0; j < n; j++) {
+    //             if (land[i][j] == 1 && visit[i][j] == 0) {
+    //                 vector<int> temp(4,0);
+    //                 priority_queue<pair<int, int>> pq;
+    //                 dfs(i, j, land, visit, pq,m,n);
+    //                 // pq ka code
+    //                 if(pq.empty()){
+    //                     continue;
+    //                 }
+    //                 auto lastCol = pq.top();
+    //                 temp[2] = lastCol.first;
+    //                 temp[3] = lastCol.second;
+    //                 while (pq.size()>0&&!pq.size() == 1) {
+    //                     pq.pop();
+    //                 }
+    //                 auto firstCol = pq.top();
+    //                 temp[0] = firstCol.first;
+    //                 temp[1] = firstCol.second;
+    //                 pq.pop();
+    //                 ans.push_back(temp);
+    //             }
+    //         }
+    //     }
+    // return ans;
+    // }
+    int delrow[4] = {0, 1, 0, -1};
+    int delcol[4] = {1, 0, -1, 0};
+
+    void dfs(int& i, int& j, vector<vector<int>>& land,
+             vector<vector<int>>& visit, int m, int n,
+             priority_queue<pair<int, int>>& pq) {
+        visit[i][j] = 1;
+        pq.push({i, j});
+
+        for (int k = 0; k < 4; k++) {
+            int nrow = i + delrow[k];
+            int ncol = j + delcol[k];
+            if (nrow >= 0 && nrow < m && ncol >= 0 && ncol < n &&
+                land[nrow][ncol] == 1 && visit[nrow][ncol] == 0) {
+                dfs(nrow, ncol, land, visit, m, n, pq);
+            }
+        }
+    }
+    vector<vector<int>> findFarmland(vector<vector<int>>& land) {
+        int m = land.size();
+        int n = land[0].size();
+        vector<vector<int>> ans;
+        vector<vector<int>> visit(m, vector<int>(n, 0));
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (land[i][j] == 1 && visit[i][j] == 0) {
+                    priority_queue<pair<int, int>> pq;
+                    vector<int> temp(4, 0);
+                    temp[0] = i;
+                    temp[1] = j;
+                    dfs(i, j, land, visit, m, n, pq);
+                    temp[2] = pq.top().first;
+                    temp[3] = pq.top().second;
+                    ans.push_back(temp);
+                }
+            }
+        }
+        return ans;
+    }
+};
