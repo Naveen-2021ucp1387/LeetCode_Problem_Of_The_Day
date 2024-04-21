@@ -1,0 +1,29 @@
+/*****************1971. Find if Path Exists in Graph - EASY********************/
+class Solution {
+public:
+    bool validPath(int n, vector<vector<int>>& edges, int source,
+                   int destination) {
+        vector<int> adj[n];
+        for (auto i : edges) {
+            adj[i[0]].push_back(i[1]);
+            adj[i[1]].push_back(i[0]);
+        }
+        vector<int> visit(n, 0);
+        queue<int> pq;
+        visit[source] = 1;
+        pq.push(source);
+        while (!pq.empty()) {
+            auto front = pq.front();
+            if (front == destination)
+                return true;
+            pq.pop();
+            for (auto i : adj[front]) {
+                if (visit[i] == 0) {
+                    pq.push(i);
+                    visit[i] = 1;
+                }
+            }
+        }
+        return false;
+    }
+};
