@@ -1,0 +1,26 @@
+/*************3068. Find the Maximum Sum of Node Values HARD*******************/
+#include <bits/stdc++.h>
+class Solution {
+public:
+    typedef long long ll;
+    long long maximumValueSum(vector<int>& nums, int k, vector<vector<int>>& edges) {
+        long long nuksaan = INT_MAX;
+        long long idealSum = 0;
+        int count = 0;
+        for(ll i : nums){
+            ll xorVal = i ^ k;
+            if(xorVal > i){
+                idealSum += xorVal;
+                count++;
+            }else{
+                idealSum += i;
+            }
+            nuksaan = min(nuksaan,abs(i-xorVal));
+        }
+        cout<<count<<" "<<idealSum<<" "<<nuksaan;
+        if(count%2 == 0 )  
+            return idealSum;
+        
+        return idealSum - nuksaan;
+    }
+};
